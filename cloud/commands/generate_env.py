@@ -6,6 +6,12 @@ PROJECT_NAME={project_name}
 PROJECT_DIR={project_dir}
 MARIADB_ROOT_PASSWORD=DbPass1@@
 DOMAIN={project_name}.local
+
+ENV=development
+DEBUG=true
+APP_VERSION=1.0.0
+
+AUTHOR=auto-docgen
 """
 
 def generate_env_file(env_path: Path, project_name: str, force: bool = False):
