@@ -2,21 +2,22 @@
 
 from cloud.commands.structure import create_folder_structure
 from cloud.commands.generate_env import generate_env_file
-from pathlib import Path
+from cloud.utils.scaffold import create_codexion_scaffold
+
 
 def run(args):
-    base_path = Path.cwd()
-
-    # Ask for project name
-    project_name = input("🏝️ Enter project name (default: codexion): ").strip() or "codexion"
-    project_path = base_path / project_name
-    project_path.mkdir(parents=True, exist_ok=True)
-
-    env_path = project_path / ".env"
+    base_path = args.project_path
+    project_name = args.project_name
+    env_path = base_path / ".env"
 
     print(f"🔧 Initializing Codexion Cloud project: {project_name}")
-    create_folder_structure(project_path)
+    base_path.mkdir(parents=True, exist_ok=True)
+
+    create_folder_structure(base_path)
+
     generate_env_file(env_path, project_name, force=args.force)
+    create_codexion_scaffold()
+
     print("✅ Initialization complete.")
 
 def add_subparser(subparsers):
