@@ -1,31 +1,7 @@
 import os
 import re
 from jinja2 import Environment, FileSystemLoader
-
-# Replace custom blank line tag with real blank line
-def remove_jinja_comments(content: str) -> str:
-    # Step 1: Replace {# r #} with placeholder
-    content = re.sub(r"{#\s*r\s*#}", "@@B@@", content)
-
-    # Step 2: Remove all other Jinja comments
-    content = re.sub(r"{#.*?#}", "", content, flags=re.DOTALL)
-
-    return content
-
-
-def postprocess_rendered(content: str) -> str:
-    # Step 1: Convert @@B@@ markers into actual blank lines
-    content = content.replace('@@B@@', '\n')
-
-    # Step 2: Normalize excess blank lines (e.g., more than 2 → just 1)
-    content = re.sub(r'\n{3,}', '\n\n', content)
-
-    # Step 3: Clean trailing spaces per line
-    lines = [line.rstrip() for line in content.splitlines()]
-    cleaned = "\n".join(lines)
-
-    return cleaned.strip() + "\n"  # Ensure exactly one trailing newline
-
+from cloud.utils.jinja_cleanup import postprocess_rendered
 
 def run(output_dir: str):
     print(f"🛠️  Running dockgen for: {output_dir}")
@@ -44,8 +20,7 @@ def run(output_dir: str):
 
     # Render and process
     rendered = template_file.render(context)
-    pre_output = remove_jinja_comments(rendered)
-    rendered_clean = postprocess_rendered(pre_output)
+    rendered_clean = postprocess_rendered(rendered)
 
     # Write output
     docker_output_dir = os.path.join(output_dir, "docker", "output")
