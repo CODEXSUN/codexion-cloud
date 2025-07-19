@@ -13,10 +13,11 @@ def run(args):
     print(f"🔧 Initializing Codexion Cloud project: {project_name}")
     base_path.mkdir(parents=True, exist_ok=True)
 
+    generate_env_file(env_path, project_name, force=args.force)
+
     create_folder_structure(base_path)
 
-    generate_env_file(env_path, project_name, force=args.force)
-    create_codexion_scaffold()
+    create_codexion_scaffold(project_name=args.project_name, force_env=args.force)
 
     print("✅ Initialization complete.")
 

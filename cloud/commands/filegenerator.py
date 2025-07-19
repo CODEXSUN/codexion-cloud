@@ -1,3 +1,5 @@
+# cloud/commands/filegenerator.py
+
 import os
 import subprocess
 from pathlib import Path
@@ -62,8 +64,12 @@ def generate_file(file_path: Path, content: str = "", overwrite: bool = False):
 
     author = get_git_username()
     extension = file_path.suffix
+    version = os.getenv("app_version")
+
     # ✅ Pass Path object to generate_header, not string
-    raw_header = generate_header(filepath=file_path, author=author)
+
+    raw_header = generate_header(file_path=file_path, author=author, version=version)
+
     comment_header = wrap_header_with_comment_style(raw_header, extension)
 
     with open(file_path, "w", encoding="utf-8") as f:

@@ -13,6 +13,7 @@ def main():
     # init command
     init_parser = subparsers.add_parser("init", help="Initialize Codexion Cloud project")
     init_parser.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
+
     init_parser.set_defaults(func=init.run)
 
     args = parser.parse_args()
