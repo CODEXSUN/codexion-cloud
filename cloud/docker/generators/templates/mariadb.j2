@@ -1,10 +1,9 @@
-# mariadb
 mariadb:
      image: mariadb:11.8
      container_name: codexion-db
      restart: unless-stopped
      environment:
-     MARIADB_ROOT_PASSWORD: DbPass1@@
+       MARIADB_ROOT_PASSWORD: DbPass1@@
      volumes:
        - db_data:/var/lib/mysql
      ports:
