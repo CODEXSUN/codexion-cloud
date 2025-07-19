@@ -9,6 +9,10 @@ from cloud.docker.generators import (
     # other_files_gen,
 )
 
+from cloud.docker.generators.dockfile import dockerfile
+from cloud.docker.generators.composefile import docker_compose
+from cloud.docker.generators.service_compose import service_compose
+
 
 def run(args):
     # Default values
@@ -21,7 +25,10 @@ def run(args):
 
     output_dir = base_path / "docker" / "output"
     os.makedirs(output_dir, exist_ok=True)
+    output_dir = str(output_dir)
 
-    dockgen.run_all(project_name)
+    dockerfile(output_dir)
+    docker_compose(output_dir)
+    service_compose(output_dir)
 
     print(f"✅ All Docker files generated inside: {output_dir}")
