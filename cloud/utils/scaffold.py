@@ -1,29 +1,17 @@
-"""
-Codexion Scaffold Generator
+# cloud/utils/scaffold.py
 
-Creates the base file and folder structure for a full-stack Frappe + FastAPI + React project.
-
-# Created on: 19-07-2025 03:02:30 Am
-# Author: Sundar
-# Version: 24-02-2025
-"""
-
-import os
 from pathlib import Path
+import os
 from dotenv import load_dotenv
+
+from cloud.commands.structure import create_folder_structure
 from cloud.commands.filegenerator import generate_multiple_files
 
 
 def create_codexion_scaffold(project_name: str = "codexion"):
-    """
-    Generate the initial scaffold structure for a Codexion project.
-
-    Args:
-        project_name (str): Name of the base project folder. Defaults to "codexion".
-    """
     load_dotenv()
 
-    # Determine base project path
+    # Try .env first
     env_project_dir = os.getenv("PROJECT_DIR")
     if env_project_dir:
         base_path = Path(env_project_dir).resolve()
@@ -32,7 +20,8 @@ def create_codexion_scaffold(project_name: str = "codexion"):
         base_path = Path.cwd() / project_name
         print(f"📂 Using project directory: {base_path}")
 
-    # Define scaffold file list
+    create_folder_structure(base_path)
+
     files = [
         {
             "name": "main",
@@ -53,6 +42,12 @@ def create_codexion_scaffold(project_name: str = "codexion"):
             "content": "fastapi\nuvicorn\n"
         },
         {
+            "name": ".env",
+            "path": base_path,
+            "extension": "",
+            "content": "PROJECT_DIR=" + str(base_path) + "\nENV=development\nDEBUG=true\n"
+        },
+        {
             "name": "vite.config",
             "path": base_path / "frontend",
             "extension": ".js",
@@ -66,6 +61,5 @@ def create_codexion_scaffold(project_name: str = "codexion"):
         },
     ]
 
-    # Use file generator to create all files and folders
     generate_multiple_files(files)
     print("\n✅ Scaffold generated successfully at:", base_path)

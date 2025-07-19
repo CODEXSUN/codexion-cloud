@@ -1,5 +1,6 @@
 # cloud/init.py
 
+from cloud.commands.structure import create_folder_structure
 from cloud.commands.generate_env import generate_env_file
 from cloud.utils.scaffold import create_codexion_scaffold
 
@@ -11,6 +12,8 @@ def run(args):
 
     print(f"🔧 Initializing Codexion Cloud project: {project_name}")
     base_path.mkdir(parents=True, exist_ok=True)
+
+    create_folder_structure(base_path)
 
     generate_env_file(env_path, project_name, force=args.force)
     create_codexion_scaffold()
