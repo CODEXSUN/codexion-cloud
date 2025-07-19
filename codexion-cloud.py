@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 import shutil
-from cloud import init
+from cloud import init, dockit
 
 
 def main():
@@ -12,9 +12,17 @@ def main():
 
     # init command
     init_parser = subparsers.add_parser("init", help="Initialize Codexion Cloud project")
+    init_parser = subparsers.add_parser("dockit", help="Generate Docker setup for Codexion Cloud")
     init_parser.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
 
     init_parser.set_defaults(func=init.run)
+
+    # dockit command
+    dockit_parser = subparsers.add_parser("dockit", help="Generate Docker setup for Codexion Cloud")
+    dockit_parser.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
+    dockit_parser.set_defaults(func=dockit.run)
+
+
 
     args = parser.parse_args()
 

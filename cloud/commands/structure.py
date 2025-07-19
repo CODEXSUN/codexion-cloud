@@ -20,12 +20,12 @@ def create_folder_structure(base_path: Path):
     author = get_git_username()
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     folders = [
-        "certs",
+        # "certs",
         "docker",
-        "backend",
-        "frontend",
-        "database",
-        "utils"
+        # "backend",
+        # "frontend",
+        # "database",
+        # "utils"
     ]
 
     for folder in folders:
