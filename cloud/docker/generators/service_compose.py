@@ -13,7 +13,7 @@ def service_compose(output_dir: str):
 
         context = {
             "service_blocks": rendered_service.strip(),
-            "volumes": volumes,
+            # "volumes": volumes,
         }
 
         output_filename = f"docker-{service}.yml"

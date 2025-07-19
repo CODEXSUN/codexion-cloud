@@ -7,3 +7,7 @@ volumes:
 {% for volume in volumes %}
   {{ volume }}:
 {% endfor %}
+
+networks:
+  codexion-network:
+    external: true
