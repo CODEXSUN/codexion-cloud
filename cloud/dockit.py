@@ -17,13 +17,11 @@ def run(args):
     base_path = Path(os.getcwd()) / project_name
     env_path = base_path / ".env"
 
-    print(f"🚀 Docker project: {project_name}")
+    print(f"🐳 Docker project: {project_name}")
     base_path.mkdir(parents=True, exist_ok=True)
 
     output_dir = base_path / "docker" / "output"
     os.makedirs(output_dir, exist_ok=True)
-
-    print(f"📁 Docker Output Paths:{ output_dir}")
 
     # Call the generator (add more as needed)
     dockgen.run(project_name)

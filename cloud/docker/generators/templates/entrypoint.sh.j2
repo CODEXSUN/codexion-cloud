@@ -1,3 +1,12 @@
 #!/bin/bash
 echo "Starting {{ app_name }}"
 exec "$@"
+
+FROM {{ base_image }}
+
+RUN apt update && apt install -y \
+    {% for pkg in packages -%}
+    {{ pkg }}{% if not loop.last %} \{% endif %}
+    {% endfor %}
+
+CMD ["{{ cmd }}"]
