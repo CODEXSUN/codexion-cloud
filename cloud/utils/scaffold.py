@@ -42,12 +42,6 @@ def create_codexion_scaffold(project_name: str = "codexion"):
             "content": "fastapi\nuvicorn\n"
         },
         {
-            "name": ".env",
-            "path": base_path,
-            "extension": "",
-            "content": "PROJECT_DIR=" + str(base_path) + "\nENV=development\nDEBUG=true\n"
-        },
-        {
             "name": "vite.config",
             "path": base_path / "frontend",
             "extension": ".js",
