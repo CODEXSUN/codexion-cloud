@@ -1,31 +1,31 @@
 # dockit.py
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from cloud.docker.generators import (
-    dockerfile_gen,
-    compose_gen,
-    env_gen,
-    other_files_gen,
+    dockgen,
+    # compose_gen,
+    # env_gen,
+    # other_files_gen,
 )
 
-def run():
-    # Load environment
-    load_dotenv()
-    project_name = os.getenv("PROJECT_NAME", "codexion")
-    print(f"🚀 Generating Docker setup for: {project_name}")
 
-    # Define output folder (reuse if exists)
-    output_dir = os.path.join(os.getcwd(), project_name)
+def run(args):
+    # Default values
+    project_name = "codexion"
+    base_path = Path(os.getcwd()) / project_name
+    env_path = base_path / ".env"
+
+    print(f"🚀 Docker project: {project_name}")
+    base_path.mkdir(parents=True, exist_ok=True)
+
+    output_dir = base_path / "docker" / "output"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Step-by-step generation
-    dockerfile_gen.generate(output_dir)
-    compose_gen.generate(output_dir)
-    env_gen.generate(output_dir)
-    other_files_gen.generate(output_dir)
+    print(f"📁 Docker Output Paths:{ output_dir}")
+
+    # Call the generator (add more as needed)
+    dockgen.run(project_name)
 
     print(f"✅ All Docker files generated inside: {output_dir}")
-
-if __name__ == "__main__":
-    main()

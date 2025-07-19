@@ -3,26 +3,21 @@
 import argparse
 from pathlib import Path
 import shutil
-from cloud import init, dockit
+from cloud import init, dockit  # assumes cloud/init.py and cloud/dockit.py exist with run() in each
 
 
 def main():
     parser = argparse.ArgumentParser(description="Codexion Cloud CLI")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
-    # init command
-    init_parser = subparsers.add_parser("init", help="Initialize Codexion Cloud project")
-    init_parser = subparsers.add_parser("dockit", help="Generate Docker setup for Codexion Cloud")
-    init_parser.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
+    # ✅ init command
+    parser_init = subparsers.add_parser("init", help="Initialize Codexion Cloud project")
+    parser_init.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
+    parser_init.set_defaults(func=init.run)
 
-    init_parser.set_defaults(func=init.run)
-
-    # dockit command
-    dockit_parser = subparsers.add_parser("dockit", help="Generate Docker setup for Codexion Cloud")
-    dockit_parser.add_argument("--force", action="store_true", help="Force overwrite if project already exists")
-    dockit_parser.set_defaults(func=dockit.run)
-
-
+    # ✅ dockit command
+    parser_dockit = subparsers.add_parser("dockit", help="Generate Docker setup for Codexion Cloud")
+    parser_dockit.set_defaults(func=dockit.run)
 
     args = parser.parse_args()
 
@@ -40,11 +35,13 @@ def main():
             print(f"🧹 Removing existing project folder: {base_path}")
             shutil.rmtree(base_path)
 
-        # Pass project name and path to init
+        # Inject values into args and call init.run(args)
         args.project_name = project_name
         args.project_path = base_path
         args.func(args)
 
+    elif hasattr(args, "func"):
+        args.func(args)  # for dockit and future commands
     else:
         parser.print_help()
 
