@@ -19,7 +19,7 @@ def run(args):
 
     create_codexion_scaffold(project_name=args.project_name, force_env=args.force)
 
-    init_git_repo()
+    init_git_repo(env_path=env_path)
 
     print("Initialization complete.")
 

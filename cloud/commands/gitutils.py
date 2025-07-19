@@ -1,7 +1,7 @@
+from dotenv import load_dotenv
+from pathlib import Path
 import os
 import subprocess
-from pathlib import Path
-from dotenv import load_dotenv
 from cloud.commands.filegenerator import generate_file
 
 GITIGNORE_CONTENT = """
@@ -38,8 +38,17 @@ build/
 .git/
 """
 
-def init_git_repo():
-    load_dotenv()
+def init_git_repo(env_path=None):
+    if env_path is None:
+        env_path = Path.cwd() / ".env"
+    else:
+        env_path = Path(env_path)
+
+    # ✅ This is the missing piece
+    load_dotenv(dotenv_path=env_path)
+
+    print(env_path)  # for confirmation
+
     project_path_str = os.getenv("PROJECT_DIR")
 
     if not project_path_str:
