@@ -1,4 +1,4 @@
-# cloud/utils/scaffold.py
+# cloud/commands/scaffold.py
 
 from pathlib import Path
 import os

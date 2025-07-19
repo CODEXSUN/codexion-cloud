@@ -1,8 +1,7 @@
 # cloud/init.py
-from cloud.commands.gitutils import init_git_repo
 from cloud.commands.structure import create_folder_structure
 from cloud.commands.generate_env import generate_env_file
-from cloud.utils.scaffold import create_codexion_scaffold
+from cloud.commands.scaffold import create_codexion_scaffold
 
 
 def run(args):
