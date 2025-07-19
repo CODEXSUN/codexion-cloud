@@ -1,0 +1,9 @@
+#version: '3.8'
+@@B@@
+services:
+{{ service_blocks | indent(4, false) }}
+@@B@@
+volumes:
+{% for volume in volumes %}
+  {{ volume }}:
+{% endfor %}

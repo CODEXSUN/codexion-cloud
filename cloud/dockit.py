@@ -5,7 +5,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 from cloud.docker.generators import (
     dockgen,
-    composegen,
     # env_gen,
     # other_files_gen,
 )
@@ -23,11 +22,6 @@ def run(args):
     output_dir = base_path / "docker" / "output"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Call the generator (add more as needed)
-
-    dockgen.run(project_name)
-
-    composegen.run(project_name)
-
+    dockgen.run_all(project_name)
 
     print(f"✅ All Docker files generated inside: {output_dir}")

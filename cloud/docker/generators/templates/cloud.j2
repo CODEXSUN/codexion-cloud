@@ -1,0 +1,16 @@
+  cloud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: codexion-cloud:latest
+    container_name: codexion-cloud
+    depends_on:
+      - mariadb
+    ports:
+      - "8000:8000"    # Frappe backend
+      - "9000:9000"    # Optional: code-server or admin UI
+    volumes:
+      - cloud_volume:/home/devops
+      - ./supervisor:/etc/supervisor/conf.d
+    tty: true
+    restart: unless-stopped
