@@ -1,9 +1,8 @@
 #version: '3.8'
 @@B@@
-services:
-{{ service_blocks | indent(4, true, false) }}
+{{ service_blocks | indent(2, false) }}
 @@B@@
-volumes:
-{% for volume in volumes %}
-  {{ volume }}:
+networks:
+{% for networks in networks %}
+  {{ networks  | indent(4, false) }}:
 {% endfor %}

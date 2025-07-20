@@ -4,7 +4,8 @@ from cloud.docker.generators.generate_from_template import generate_from_templat
 
 def docker_compose(output_dir: str):
     service_names = ["mariadb", "cloud", "nginx"]
-    volumes = ["cloud_volume", "db_data"]
+    networks = ["codexion-network:", "external:true"]
+
 
     output_path = os.path.join(output_dir, "docker", "output")
     os.makedirs(output_path, exist_ok=True)
@@ -18,7 +19,7 @@ def docker_compose(output_dir: str):
 
     full_context = {
         "service_blocks": service_blocks.strip(),
-        "volumes": volumes
+        "networks": networks
     }
 
     generate_from_template("base-compose.j2", "docker-compose.yml", full_context, output_path)

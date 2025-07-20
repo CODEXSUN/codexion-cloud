@@ -10,6 +10,9 @@
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+```
+
+```bash
 sudo apt install -y ca-certificates curl gnupg lsb-release
 ```
 

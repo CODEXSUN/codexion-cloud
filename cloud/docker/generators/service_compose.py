@@ -3,7 +3,7 @@ from cloud.docker.generators.generate_from_template import generate_from_templat
 
 def service_compose(output_dir: str):
     service_names = ["mariadb", "cloud", "nginx"]
-    volumes = ["cloud_volume", "db_data"]
+    networks = ["codexion-network", "external:true"]
 
     output_path = os.path.join(output_dir, "docker", "output")
     os.makedirs(output_path, exist_ok=True)
@@ -13,7 +13,7 @@ def service_compose(output_dir: str):
 
         context = {
             "service_blocks": rendered_service.strip(),
-            # "volumes": volumes,
+            "networks": networks,
         }
 
         output_filename = f"docker-{service}.yml"

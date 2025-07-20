@@ -1,3 +1,4 @@
+services:
   mariadb:
     image: mariadb:11.8
     container_name: codexion-db
@@ -10,3 +11,6 @@
       - "3306:3306"
     networks:
       - codexion-network
+
+volumes:
+  db_data:
